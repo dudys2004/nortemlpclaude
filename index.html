@@ -118,15 +118,145 @@
           <h2>Em poucos minutos, entenda <span class="accent">como pensamos</span> os números do seu negócio.</h2>
         </div>
 
-        <div class="video-frame">
-          <iframe
-            src="https://www.youtube.com/embed/c5h3Xhh2rgo"
-            title="Nortem Consultoria — Apresentação"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen>
-          </iframe>
-        </div>
+        <!-- HTML VIDEO YOUTUBE AJUSTADO -->
+<div class="video-frame">
+  <div class="video-wrapper">
+    <!-- Thumbnail customizado -->
+    <img 
+      src="SEU_THUMBNAIL_AQUI.jpg" 
+      alt="Nortem Consultoria — Apresentação"
+      class="video-thumbnail"
+      id="videoThumbnail"
+    >
+    
+    <!-- Botão play -->
+    <button class="play-button" id="playButton" aria-label="Reproduzir vídeo">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M8 5v14l11-7z"/>
+      </svg>
+    </button>
+    
+    <!-- iframe oculto inicialmente -->
+    <iframe
+      id="youtubeFrame"
+      src="https://www.youtube.com/embed/c5h3Xhh2rgo?autoplay=1&rel=0&modestbranding=1"
+      title="Nortem Consultoria — Apresentação"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+      class="hidden"
+    ></iframe>
+  </div>
+</div>
+
+<!-- CSS -->
+<style>
+.video-frame {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* Razão 16:9 */
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.video-thumbnail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.video-thumbnail:hover {
+  opacity: 0.9;
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  background: rgba(255, 0, 0, 0.85);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.play-button:hover {
+  background: rgba(255, 0, 0, 1);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+.play-button svg {
+  width: 40px;
+  height: 40px;
+  color: white;
+  margin-left: 4px;
+}
+
+#youtubeFrame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+#youtubeFrame.hidden {
+  display: none;
+}
+
+#youtubeFrame.visible {
+  display: block;
+}
+
+.video-thumbnail.hidden {
+  display: none;
+}
+
+.play-button.hidden {
+  display: none;
+}
+</style>
+
+<!-- JavaScript -->
+<script>
+const playButton = document.getElementById('playButton');
+const thumbnail = document.getElementById('videoThumbnail');
+const iframe = document.getElementById('youtubeFrame');
+
+function playVideo() {
+  // Mostrar iframe
+  iframe.classList.remove('hidden');
+  iframe.classList.add('visible');
+  
+  // Ocultar thumbnail e botão
+  thumbnail.classList.add('hidden');
+  playButton.classList.add('hidden');
+}
+
+// Event listeners
+playButton.addEventListener('click', playVideo);
+thumbnail.addEventListener('click', playVideo);
+</script>
 
         <div class="video-metrics">
           <div class="metric-card">
