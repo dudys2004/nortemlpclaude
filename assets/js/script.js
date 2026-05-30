@@ -102,32 +102,21 @@
   );
   counters.forEach((c) => counterIO.observe(c));
 
-  /* ---------- YOUTUBE PLAYER CONTROL ---------------------- */
-  let youtubePlayer = null;
+  /* ---------- VÍDEO HTML5 PLAYER CONTROL ------------------- */
+  const nortemVideo = document.getElementById("nortemVideo");
 
-  // Inicializa o YouTube Player API quando pronto
-  window.onYouTubeIframeAPIReady = () => {
-    youtubePlayer = new window.YT.Player("youtubeVideo", {
-      host: "https://www.youtube.com",
-      events: {
-        onReady: () => {
-          // Quando o player estiver pronto, detecta cliques em links para #video
-          document.querySelectorAll('a[href="#video"]').forEach((link) => {
-            link.addEventListener("click", (e) => {
-              e.preventDefault();
-              // Toca o vídeo com som quando clicado
-              if (youtubePlayer) {
-                youtubePlayer.playVideo();
-                youtubePlayer.unMute();
-              }
-              // Scroll suave para a seção do vídeo
-              document.getElementById("video").scrollIntoView({ behavior: "smooth" });
-            });
-          });
-        }
-      }
+  if (nortemVideo) {
+    // Detecta cliques em links para #video e toca o vídeo
+    document.querySelectorAll('a[href="#video"]').forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        // Toca o vídeo com som quando clicado
+        nortemVideo.play();
+        // Scroll suave para a seção do vídeo
+        document.getElementById("video").scrollIntoView({ behavior: "smooth" });
+      });
     });
-  };
+  }
 
   /* ---------- WHATSAPP DINÂMICO --------------------------- */
   document.querySelectorAll(`a[href^="https://wa.me/"]`).forEach((a) => {

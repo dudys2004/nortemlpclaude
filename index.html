@@ -27,9 +27,6 @@
 
   <!-- Estilos -->
   <link rel="stylesheet" href="assets/css/style.css" />
-
-  <!-- YouTube IFrame API -->
-  <script src="https://www.youtube.com/iframe_api"></script>
 </head>
 <body>
   <!-- Header / Nav -->
@@ -123,14 +120,17 @@
         </div>
 
         <div class="video-frame">
-          <iframe
-            id="youtubeVideo"
-            src="https://www.youtube.com/embed/c5h3Xhh2rgo?rel=0&modestbranding=1&enablejsapi=1&controls=1&fs=1&iv_load_policy=3"
-            title="Nortem Consultoria — Apresentação"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen>
-          </iframe>
+          <video
+            id="nortemVideo"
+            width="100%"
+            height="auto"
+            poster="assets/img/logo.png"
+            controls
+            controlsList="nodownload"
+            preload="metadata">
+            <source src="https://res.cloudinary.com/dj4qjg8wm/video/upload/q_auto/f_auto/v1780150596/Sua_empresa_fatura_mas_n%C3%A3o_sobra_dinheiro_Assiste_isso_e_pare_de_perder_tempo._-_Berry_Consultoria_Empresarial_1080p_h264_youtube_ixcbsc.mp4" type="video/mp4" />
+            Seu navegador não suporta vídeos HTML5.
+          </video>
         </div>
 
         <div class="video-metrics">
