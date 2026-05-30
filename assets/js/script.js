@@ -106,6 +106,26 @@
   const nortemVideo = document.getElementById("nortemVideo");
 
   if (nortemVideo) {
+    let autoplayTriggered = false;
+
+    // Autoplay ao entrar na viewport
+    const videoObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !autoplayTriggered) {
+            autoplayTriggered = true;
+            nortemVideo.play().catch(() => {
+              // Se o navegador bloquear autoplay com som, silencia e toca
+              nortemVideo.muted = true;
+              nortemVideo.play();
+            });
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    videoObserver.observe(nortemVideo);
+
     // Detecta cliques em links para #video e toca o vídeo
     document.querySelectorAll('a[href="#video"]').forEach((link) => {
       link.addEventListener("click", (e) => {
