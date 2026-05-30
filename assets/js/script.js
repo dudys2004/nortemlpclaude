@@ -108,6 +108,7 @@
   // Inicializa o YouTube Player API quando pronto
   window.onYouTubeIframeAPIReady = () => {
     youtubePlayer = new window.YT.Player("youtubeVideo", {
+      host: "https://www.youtube.com",
       events: {
         onReady: () => {
           // Quando o player estiver pronto, detecta cliques em links para #video
