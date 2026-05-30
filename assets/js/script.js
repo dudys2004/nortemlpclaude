@@ -103,23 +103,28 @@
   counters.forEach((c) => counterIO.observe(c));
 
   /* ---------- AUTOPLAY VÍDEO AO SCROLL -------------------- */
-  const youtubeVideo = document.getElementById("youtubeVideo");
-  if (youtubeVideo) {
+  const videoFrame = document.querySelector(".video-frame");
+  if (videoFrame) {
     let autoplayActivated = false;
     const videoIO = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !autoplayActivated) {
             autoplayActivated = true;
-            const currentSrc = youtubeVideo.src;
-            const separator = currentSrc.includes("?") ? "&" : "?";
-            youtubeVideo.src = currentSrc + separator + "autoplay=1&mute=1";
+            const newIframe = document.createElement("iframe");
+            newIframe.src = "https://www.youtube.com/embed/c5h3Xhh2rgo?autoplay=1&mute=1";
+            newIframe.title = "Nortem Consultoria — Apresentação";
+            newIframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
+            newIframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
+            newIframe.setAttribute("allowfullscreen", "");
+            videoFrame.innerHTML = "";
+            videoFrame.appendChild(newIframe);
           }
         });
       },
       { threshold: 0.1 }
     );
-    videoIO.observe(youtubeVideo);
+    videoIO.observe(videoFrame);
   }
 
   /* ---------- WHATSAPP DINÂMICO --------------------------- */
