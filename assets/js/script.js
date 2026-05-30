@@ -102,6 +102,26 @@
   );
   counters.forEach((c) => counterIO.observe(c));
 
+  /* ---------- AUTOPLAY VÍDEO AO SCROLL -------------------- */
+  const youtubeVideo = document.getElementById("youtubeVideo");
+  if (youtubeVideo) {
+    let autoplayActivated = false;
+    const videoIO = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !autoplayActivated) {
+            autoplayActivated = true;
+            const currentSrc = youtubeVideo.src;
+            const separator = currentSrc.includes("?") ? "&" : "?";
+            youtubeVideo.src = currentSrc + separator + "autoplay=1&mute=1";
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    videoIO.observe(youtubeVideo);
+  }
+
   /* ---------- WHATSAPP DINÂMICO --------------------------- */
   document.querySelectorAll(`a[href^="https://wa.me/"]`).forEach((a) => {
     a.href = `https://wa.me/${WHATSAPP_NUMBER}`;
