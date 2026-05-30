@@ -529,12 +529,22 @@ p { margin: 0; color: var(--fg-soft); }
   padding-top: 7px;
   z-index: 2;
 }
-.scroll-cue span {
+.scroll-cue span:first-child {
   width: 3px;
   height: 8px;
   background: var(--accent);
   border-radius: 2px;
   animation: scrollDown 1.8s ease-in-out infinite;
+}
+.scroll-cue-text {
+  position: absolute;
+  bottom: -30px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 @keyframes scrollDown {
   0% { transform: translateY(0); opacity: 1; }
