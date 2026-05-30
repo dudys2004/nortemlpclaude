@@ -102,30 +102,31 @@
   );
   counters.forEach((c) => counterIO.observe(c));
 
-  /* ---------- AUTOPLAY VÍDEO AO SCROLL -------------------- */
-  const videoFrame = document.querySelector(".video-frame");
-  if (videoFrame) {
-    let autoplayActivated = false;
-    const videoIO = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !autoplayActivated) {
-            autoplayActivated = true;
-            const newIframe = document.createElement("iframe");
-            newIframe.src = "https://www.youtube.com/embed/c5h3Xhh2rgo?autoplay=1&mute=1";
-            newIframe.title = "Nortem Consultoria — Apresentação";
-            newIframe.setAttribute("allow", "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
-            newIframe.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
-            newIframe.setAttribute("allowfullscreen", "");
-            videoFrame.innerHTML = "";
-            videoFrame.appendChild(newIframe);
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    videoIO.observe(videoFrame);
-  }
+  /* ---------- YOUTUBE PLAYER CONTROL ---------------------- */
+  let youtubePlayer = null;
+
+  // Inicializa o YouTube Player API quando pronto
+  window.onYouTubeIframeAPIReady = () => {
+    youtubePlayer = new window.YT.Player("youtubeVideo", {
+      events: {
+        onReady: () => {
+          // Quando o player estiver pronto, detecta cliques em links para #video
+          document.querySelectorAll('a[href="#video"]').forEach((link) => {
+            link.addEventListener("click", (e) => {
+              e.preventDefault();
+              // Toca o vídeo com som quando clicado
+              if (youtubePlayer) {
+                youtubePlayer.playVideo();
+                youtubePlayer.unMute();
+              }
+              // Scroll suave para a seção do vídeo
+              document.getElementById("video").scrollIntoView({ behavior: "smooth" });
+            });
+          });
+        }
+      }
+    });
+  };
 
   /* ---------- WHATSAPP DINÂMICO --------------------------- */
   document.querySelectorAll(`a[href^="https://wa.me/"]`).forEach((a) => {
