@@ -89,6 +89,16 @@ p { margin: 0; color: var(--fg-soft); }
   border-radius: 999px;
   background: rgba(212, 162, 76, 0.06);
 }
+.eyebrow--with-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+}
+.berry-logo {
+  height: 1.5em;
+  width: auto;
+  display: block;
+}
 
 .accent { color: var(--accent); font-style: italic; }
 .lead {
