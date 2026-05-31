@@ -268,9 +268,9 @@
           segmento: formData.segmento || "",
           faturamento: formData.faturamento || "",
           dataLead: new Date().toISOString().split('T')[0],
-          origem: "Landing Page Nortem",
+          origem: "Tráfego Pago LP",
           status: "Novo",
-          fase: "Contato Inicial",
+          fase: "Novo Lead",
           observacoes: `Cargo: ${formData.cargo || '-'}\n` +
                       `Tempo na empresa: ${formData.tempo_empresa || '-'}\n` +
                       `Desafio principal: ${formData.desafio || '-'}\n\n` +
