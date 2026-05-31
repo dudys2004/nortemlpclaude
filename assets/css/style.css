@@ -215,7 +215,12 @@ p { margin: 0; color: var(--fg-soft); }
   100% { transform: scale(1); }
 }
 .btn-unlock.unlocked {
-  animation: unlockPop 0.5s var(--ease) forwards;
+  /* Pop ao desbloquear, depois entra no pulsar contínuo */
+  animation: unlockPop 0.5s var(--ease) forwards, pulse-cta 2.4s ease-in-out 0.5s infinite;
+}
+.btn-unlock.unlocked:hover {
+  animation-play-state: paused;
+  transform: translateY(-2px);
 }
 
 /* HEADER -------------------------------------------------- */
