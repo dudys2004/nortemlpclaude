@@ -279,13 +279,14 @@
 
         const response = await fetch(CRM_ENDPOINT, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({
             action: "createLead",
             clienteId: CRM_CLIENTE_ID,
             token: CRM_TOKEN,
             payload: leadPayload
-          })
+          }),
+          redirect: "follow"
         });
 
         if (!response.ok) {
