@@ -9,8 +9,8 @@
   /* ---------- CONFIG -------------------------------------- */
   // URL do Google Apps Script — CRM Base (Site-Nortem)
   // Este endpoint integra os leads da LP diretamente com o CRM
-  const CRM_ENDPOINT = "https://script.google.com/macros/s/SEU_DEPLOY_ID/exec";
-  const CRM_TOKEN = "seu-token-aqui";
+  const CRM_ENDPOINT = "https://script.google.com/macros/s/AKfycbx1EsTWQ_5YXwJFRZTHdl0ahAIlK7Ua8dkO2wM4GD3OHwIEvrMiKL79eoZcL6B-yrjo/exec";
+  const CRM_TOKEN = "danilocesarsouzaregispires03021989";
   const CRM_CLIENTE_ID = "Dudys";
 
   // Número do WhatsApp para o botão flutuante e links (formato internacional, sem '+').
