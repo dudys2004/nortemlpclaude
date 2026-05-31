@@ -115,7 +115,12 @@
           nortemVideo.muted = true;
           nortemVideo.play().catch(() => {});
         });
-        document.getElementById("video").scrollIntoView({ behavior: "smooth" });
+        // Desktop: rola direto ao vídeo (pula o cabeçalho da seção)
+        // Mobile: rola ao início da seção
+        const scrollTarget = window.innerWidth > 960
+          ? document.querySelector(".video-frame")
+          : document.getElementById("video");
+        scrollTarget.scrollIntoView({ behavior: "smooth" });
       });
     });
 
