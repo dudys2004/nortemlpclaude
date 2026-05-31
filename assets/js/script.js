@@ -277,6 +277,9 @@
                       `Mensagem:\n${formData.mensagem || '(sem mensagem)'}`
         };
 
+        console.log("[Nortem] Enviando lead para CRM...");
+        console.log("[Nortem] Payload:", leadPayload);
+
         const response = await fetch(CRM_ENDPOINT, {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
@@ -289,13 +292,30 @@
           redirect: "follow"
         });
 
+        console.log("[Nortem] Status da resposta:", response.status);
+
+        const responseText = await response.text();
+        console.log("[Nortem] Resposta do Apps Script:", responseText);
+
         if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.error || "HTTP " + response.status);
+          throw new Error("HTTP " + response.status + ": " + responseText);
         }
 
-        const result = await response.json();
-        if (result.error) throw new Error(result.error);
+        let result;
+        try {
+          result = JSON.parse(responseText);
+          console.log("[Nortem] JSON parseado:", result);
+        } catch (e) {
+          console.error("[Nortem] Erro ao fazer parse do JSON:", e);
+          throw new Error("Resposta inválida do servidor: " + responseText);
+        }
+
+        if (result.error) {
+          console.error("[Nortem] Erro retornado pelo Apps Script:", result.error);
+          throw new Error(result.error);
+        }
+
+        console.log("[Nortem] Lead criado com sucesso!", result);
       } else {
         // Modo demo: sem endpoint configurado
         console.warn(
