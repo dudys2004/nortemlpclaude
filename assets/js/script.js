@@ -9,7 +9,7 @@
   /* ---------- CONFIG -------------------------------------- */
   // URL do Google Apps Script — CRM Base (Site-Nortem)
   // Este endpoint integra os leads da LP diretamente com o CRM
-  const CRM_ENDPOINT = "https://script.google.com/macros/s/AKfycbx1EsTWQ_5YXwJFRZTHdl0ahAIlK7Ua8dkO2wM4GD3OHwIEvrMiKL79eoZcL6B-yrjo/exec";
+  const CRM_ENDPOINT = "https://script.google.com/macros/s/AKfycbxVf5C3kGlxk7F2dsX6Cwm3xGn93TS86AJmB0iRq85FT7sqIio2ZnEKOSNW2w8gOYPx/exec";
   const CRM_TOKEN = "danilocesarsouzaregispires03021989";
   const CRM_CLIENTE_ID = "Dudys";
 
