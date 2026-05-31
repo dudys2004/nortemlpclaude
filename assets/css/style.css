@@ -123,6 +123,7 @@ p { margin: 0; color: var(--fg-soft); }
   border: 1px solid transparent;
 }
 .btn svg { width: 1.1em; height: 1.1em; }
+.btn [hidden], .btn svg[hidden] { display: none !important; }
 .btn-primary {
   background: var(--accent);
   color: #0a0a0a;

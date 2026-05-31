@@ -118,7 +118,7 @@
         // Desktop: rola direto ao vídeo com offset (pula o cabeçalho da seção)
         // Mobile: rola ao início da seção normalmente
         if (window.innerWidth > 960) {
-          const SCROLL_OFFSET = 160; // px do topo do viewport — ajuste aqui se necessário
+          const SCROLL_OFFSET = 150; // px do topo do viewport — ajuste aqui se necessário
           const frame = document.querySelector(".video-frame");
           window.scrollTo({
             top: frame.getBoundingClientRect().top + window.scrollY - SCROLL_OFFSET,
