@@ -7,11 +7,11 @@
   "use strict";
 
   /* ---------- CONFIG -------------------------------------- */
-  // Cole aqui a URL do "App da Web" gerada pelo Google Apps Script.
-  // Tutorial completo passo a passo:
-  //   integracao-google-sheets/COMO-CONFIGURAR.md
-  // Formato esperado: https://script.google.com/macros/s/AKfyc.../exec
-  const SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbxEnn9EtNuZZTMg07zmz9gx84N-tv8xrEa9SuyfBxsrLCeCnYQ2MbzZCyKUeeFkNXG9/exec";
+  // URL do Google Apps Script — CRM Base (Site-Nortem)
+  // Este endpoint integra os leads da LP diretamente com o CRM
+  const CRM_ENDPOINT = "https://script.google.com/macros/s/SEU_DEPLOY_ID/exec";
+  const CRM_TOKEN = "seu-token-aqui";
+  const CRM_CLIENTE_ID = "Dudys";
 
   // Número do WhatsApp para o botão flutuante e links (formato internacional, sem '+').
   const WHATSAPP_NUMBER = "5587996050090";
@@ -244,16 +244,11 @@
       return;
     }
 
-    const data = Object.fromEntries(new FormData(form).entries());
-    data._origem = "Landing Page Nortem";
-    data._pagina = window.location.href;
-    data._enviado_em = new Date().toISOString();
+    const formData = Object.fromEntries(new FormData(form).entries());
 
     // Identifica leads abaixo de R$ 100 mil para mostrar mensagem específica.
-    // OBS: TODOS os leads são enviados à planilha — esta variável serve só
-    // para customizar a mensagem na tela.
     const underQualifiedRanges = ["ate_30k", "31k_50k", "51k_70k", "71k_100k"];
-    const isUnderQualified = underQualifiedRanges.includes(data.faturamento);
+    const isUnderQualified = underQualifiedRanges.includes(formData.faturamento);
 
     const submitBtn = form.querySelector('button[type="submit"]');
     const originalLabel = submitBtn.innerHTML;
@@ -261,23 +256,49 @@
     submitBtn.innerHTML = "Enviando...";
 
     try {
-      const isConfigured = SHEETS_ENDPOINT && !SHEETS_ENDPOINT.startsWith("COLE_AQUI");
+      const isConfigured = CRM_ENDPOINT && !CRM_ENDPOINT.startsWith("SEU_DEPLOY_ID");
 
       if (isConfigured) {
-        // O Apps Script não retorna cabeçalhos CORS padrão; usamos
-        // text/plain para que o navegador trate como "simple request"
-        // e não dispare preflight (que seria bloqueado).
-        const response = await fetch(SHEETS_ENDPOINT, {
+        // Mapear campos do formulário da LP para os campos do CRM Base
+        const leadPayload = {
+          nomeContato: formData.nome || "",
+          email: formData.email || "",
+          telefone: formData.whatsapp || "",
+          empresa: formData.empresa || "",
+          segmento: formData.segmento || "",
+          faturamento: formData.faturamento || "",
+          dataLead: new Date().toISOString().split('T')[0],
+          origem: "Landing Page Nortem",
+          status: "Novo",
+          fase: "Contato Inicial",
+          observacoes: `Cargo: ${formData.cargo || '-'}\n` +
+                      `Tempo na empresa: ${formData.tempo_empresa || '-'}\n` +
+                      `Desafio principal: ${formData.desafio || '-'}\n\n` +
+                      `Mensagem:\n${formData.mensagem || '(sem mensagem)'}`
+        };
+
+        const response = await fetch(CRM_ENDPOINT, {
           method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(data),
-          redirect: "follow"
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            action: "createLead",
+            clienteId: CRM_CLIENTE_ID,
+            token: CRM_TOKEN,
+            payload: leadPayload
+          })
         });
-        if (!response.ok) throw new Error("HTTP " + response.status);
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || "HTTP " + response.status);
+        }
+
+        const result = await response.json();
+        if (result.error) throw new Error(result.error);
       } else {
-        // Modo demo: sem endpoint configurado, simula sucesso
+        // Modo demo: sem endpoint configurado
         console.warn(
-          "[Nortem] SHEETS_ENDPOINT não configurado. Edite assets/js/script.js."
+          "[Nortem] CRM_ENDPOINT não configurado. Edite assets/js/script.js."
         );
         await new Promise((r) => setTimeout(r, 600));
       }
@@ -293,6 +314,7 @@
     } catch (err) {
       console.error("[Nortem] Erro ao enviar formulário:", err);
       msgError.hidden = false;
+      msgError.textContent = "Erro ao enviar: " + err.message;
     } finally {
       submitBtn.disabled = false;
       submitBtn.innerHTML = originalLabel;
