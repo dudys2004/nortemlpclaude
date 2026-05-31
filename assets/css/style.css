@@ -144,6 +144,50 @@ p { margin: 0; color: var(--fg-soft); }
 }
 .btn-block { width: 100%; justify-content: center; }
 
+/* Botão com desbloqueio progressivo pelo vídeo */
+.btn-unlock {
+  position: relative;
+  overflow: hidden;
+}
+.btn-unlock.locked {
+  opacity: 0.45;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: none !important;
+  box-shadow: none !important;
+}
+.unlock-bar {
+  position: absolute;
+  inset: 0;
+  width: 0%;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: inherit;
+  z-index: 0;
+  transition: width 1s linear;
+}
+.btn-label {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+}
+.unlock-hint {
+  font-size: 0.8rem;
+  color: var(--fg-muted);
+  margin-top: 0.55rem;
+  letter-spacing: 0.02em;
+}
+.unlock-hint[hidden] { display: none; }
+@keyframes unlockPop {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.06); }
+  100% { transform: scale(1); }
+}
+.btn-unlock.unlocked {
+  animation: unlockPop 0.5s var(--ease) forwards;
+}
+
 /* HEADER -------------------------------------------------- */
 .site-header {
   position: fixed;

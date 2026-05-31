@@ -118,6 +118,28 @@
         document.getElementById("video").scrollIntoView({ behavior: "smooth" });
       });
     });
+
+    // ---------- BOTÃO DE DESBLOQUEIO PROGRESSIVO ----------
+    const btnAgendar  = document.getElementById("btnAgendar");
+    const unlockBar   = document.getElementById("unlockBar");
+    const unlockHint  = document.getElementById("unlockHint");
+    const UNLOCK_AT   = 120; // segundos (2 min)
+    let isUnlocked    = false;
+
+    if (btnAgendar) {
+      nortemVideo.addEventListener("timeupdate", () => {
+        if (isUnlocked) return;
+        const progress = Math.min(nortemVideo.currentTime / UNLOCK_AT, 1);
+        unlockBar.style.width = (progress * 100).toFixed(1) + "%";
+
+        if (progress >= 1) {
+          isUnlocked = true;
+          btnAgendar.classList.remove("locked");
+          btnAgendar.classList.add("unlocked");
+          if (unlockHint) unlockHint.hidden = true;
+        }
+      });
+    }
   }
 
   /* ---------- WHATSAPP DINÂMICO --------------------------- */
