@@ -124,15 +124,32 @@
           </video>
         </div>
 
-        <div style="text-align: center; margin-bottom: 3rem;">
+        <div class="unlock-wrap" id="unlockWrap">
+          <!-- Barra de progresso visível -->
+          <div class="unlock-progress-area" id="unlockProgressArea">
+            <div class="unlock-progress-header">
+              <span class="unlock-progress-label">Progresso de liberação:</span>
+              <span class="unlock-progress-pct" id="unlockPct">0%</span>
+            </div>
+            <div class="unlock-track">
+              <div class="unlock-fill" id="unlockFill"></div>
+            </div>
+          </div>
+
+          <!-- Botão bloqueado -->
           <a href="#diagnostico" class="btn btn-primary btn-unlock locked" id="btnAgendar">
-            <span class="unlock-bar" id="unlockBar"></span>
-            <span class="btn-label">
+            <!-- Ícone relógio (estado bloqueado) -->
+            <svg class="icon-locked" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+              <path d="M12 7v5l3 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <span class="label-locked">Assistindo…</span>
+            <!-- Conteúdo desbloqueado (oculto até liberar) -->
+            <span class="label-unlocked" hidden>
               Agendar diagnóstico
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
           </a>
-          <p class="unlock-hint" id="unlockHint">Assista ao vídeo para desbloquear</p>
         </div>
 
         <div class="video-metrics">

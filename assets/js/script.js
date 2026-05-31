@@ -120,23 +120,40 @@
     });
 
     // ---------- BOTÃO DE DESBLOQUEIO PROGRESSIVO ----------
-    const btnAgendar  = document.getElementById("btnAgendar");
-    const unlockBar   = document.getElementById("unlockBar");
-    const unlockHint  = document.getElementById("unlockHint");
-    const UNLOCK_AT   = 120; // segundos (2 min)
-    let isUnlocked    = false;
+    const btnAgendar   = document.getElementById("btnAgendar");
+    const unlockFill   = document.getElementById("unlockFill");
+    const unlockPct    = document.getElementById("unlockPct");
+    const labelLocked  = btnAgendar ? btnAgendar.querySelector(".label-locked")   : null;
+    const iconLocked   = btnAgendar ? btnAgendar.querySelector(".icon-locked")    : null;
+    const labelUnlocked = btnAgendar ? btnAgendar.querySelector(".label-unlocked") : null;
+    const UNLOCK_AT    = 120; // segundos (2 min)
+    let isUnlocked     = false;
 
     if (btnAgendar) {
       nortemVideo.addEventListener("timeupdate", () => {
         if (isUnlocked) return;
-        const progress = Math.min(nortemVideo.currentTime / UNLOCK_AT, 1);
-        unlockBar.style.width = (progress * 100).toFixed(1) + "%";
+        const pct = Math.min(nortemVideo.currentTime / UNLOCK_AT, 1);
+        const pctInt = Math.floor(pct * 100);
 
-        if (progress >= 1) {
+        // Atualiza barra e porcentagem
+        unlockFill.style.width = (pct * 100).toFixed(1) + "%";
+        unlockPct.textContent  = pctInt + "%";
+
+        if (pct >= 1) {
           isUnlocked = true;
+
+          // Barra completa
+          unlockFill.style.width = "100%";
+          unlockPct.textContent  = "100%";
+
+          // Troca conteúdo do botão
+          if (iconLocked)    iconLocked.hidden    = true;
+          if (labelLocked)   labelLocked.hidden   = true;
+          if (labelUnlocked) labelUnlocked.hidden = false;
+
+          // Desbloqueia e anima
           btnAgendar.classList.remove("locked");
           btnAgendar.classList.add("unlocked");
-          if (unlockHint) unlockHint.hidden = true;
         }
       });
     }
