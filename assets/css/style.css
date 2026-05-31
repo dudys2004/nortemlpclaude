@@ -914,6 +914,13 @@ p { margin: 0; color: var(--fg-soft); }
   font-size: 0.92rem;
 }
 .form-msg[hidden] { display: none; }
+.phone-error {
+  display: block;
+  font-size: 0.82rem;
+  color: #f0b8b8;
+  margin-top: 0.4rem;
+}
+.phone-error[hidden] { display: none; }
 .form-msg strong { font-size: 1rem; }
 .form-msg--success {
   background: rgba(70, 180, 110, 0.1);

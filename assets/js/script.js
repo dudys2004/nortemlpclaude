@@ -148,12 +148,38 @@
   const msgSuccess = document.getElementById("formSuccess");
   const msgWarning = document.getElementById("formWarning");
   const msgError = document.getElementById("formError");
+  const phoneErrorEl = document.getElementById("phoneError");
 
   const hideMessages = () => {
     msgSuccess.hidden = true;
     msgWarning.hidden = true;
     msgError.hidden = true;
+    if (phoneErrorEl) phoneErrorEl.hidden = true;
   };
+
+  // Valida o telefone e exibe mensagem específica
+  const validatePhone = (value) => {
+    const digits = value.replace(/\D/g, "");
+    if (digits.length === 11) {
+      phoneErrorEl.hidden = true;
+      return true;
+    }
+    if (digits.length === 10) {
+      phoneErrorEl.innerHTML = "Número incompleto — esqueceu o <strong>9</strong> na frente? Ex: (XX) <strong>9</strong>XXXX-XXXX";
+    } else {
+      phoneErrorEl.innerHTML = "Informe o WhatsApp com DDD + 9 dígitos (11 no total).";
+    }
+    phoneErrorEl.hidden = false;
+    return false;
+  };
+
+  // Valida ao sair do campo
+  if (phoneInput) {
+    phoneInput.addEventListener("blur", () => validatePhone(phoneInput.value));
+    phoneInput.addEventListener("input", () => {
+      if (!phoneErrorEl.hidden) validatePhone(phoneInput.value);
+    });
+  }
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -161,6 +187,12 @@
 
     if (!form.checkValidity()) {
       form.reportValidity();
+      return;
+    }
+
+    // Validação explícita do telefone (11 dígitos)
+    if (phoneInput && !validatePhone(phoneInput.value)) {
+      phoneInput.focus();
       return;
     }
 
