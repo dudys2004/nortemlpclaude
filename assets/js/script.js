@@ -106,31 +106,10 @@
   const nortemVideo = document.getElementById("nortemVideo");
 
   if (nortemVideo) {
-    let autoplayTriggered = false;
-
-    // Autoplay ao entrar na viewport — tenta com som; se browser bloquear, cai para mudo
-    const videoObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !autoplayTriggered) {
-            autoplayTriggered = true;
-            nortemVideo.muted = false;
-            nortemVideo.play().catch(() => {
-              nortemVideo.muted = true;
-              nortemVideo.play().catch(() => {});
-            });
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-    videoObserver.observe(nortemVideo);
-
-    // Clique no botão "Assista o vídeo": scroll + autoplay com som
+    // Inicia vídeo com som apenas ao clicar em botões com href="#video"
     document.querySelectorAll('a[href="#video"]').forEach((link) => {
       link.addEventListener("click", (e) => {
         e.preventDefault();
-        autoplayTriggered = true;
         nortemVideo.muted = false;
         nortemVideo.play().catch(() => {
           nortemVideo.muted = true;

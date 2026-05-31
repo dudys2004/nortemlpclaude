@@ -1073,6 +1073,12 @@ p { margin: 0; color: var(--fg-soft); }
 
   /* Em mobile, esconde a figura (não cabe sem cobrir o texto) */
   .hero-figure { display: none; }
+
+  /* Hero ocupa tela cheia no mobile */
+  .hero { min-height: 100dvh; padding: calc(72px + 80px) 0 80px; }
+
+  /* Remove o brilho amarelo no mobile */
+  .glow { display: none; }
 }
 
 /* REDUCED MOTION ------------------------------------------ */
