@@ -272,7 +272,7 @@ p { margin: 0; color: var(--fg-soft); }
 .hero {
   position: relative;
   min-height: 100vh;
-  padding: calc(72px + 60px) 0 80px;
+  padding: calc(72px + 120px) 0 80px;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -379,7 +379,7 @@ p { margin: 0; color: var(--fg-soft); }
   align-items: center;
   justify-content: flex-end;
   width: auto;
-  transform: translateY(-50%);
+  transform: translateY(-42%);
 }
 .hero-figure img {
   height: 160%;

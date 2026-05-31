@@ -108,31 +108,34 @@
   if (nortemVideo) {
     let autoplayTriggered = false;
 
-    // Autoplay ao entrar na viewport
+    // Autoplay ao entrar na viewport — tenta com som; se browser bloquear, cai para mudo
     const videoObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !autoplayTriggered) {
             autoplayTriggered = true;
+            nortemVideo.muted = false;
             nortemVideo.play().catch(() => {
-              // Se o navegador bloquear autoplay com som, silencia e toca
               nortemVideo.muted = true;
-              nortemVideo.play();
+              nortemVideo.play().catch(() => {});
             });
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.3 }
     );
     videoObserver.observe(nortemVideo);
 
-    // Detecta cliques em links para #video e toca o vídeo
+    // Clique no botão "Assista o vídeo": scroll + autoplay com som
     document.querySelectorAll('a[href="#video"]').forEach((link) => {
       link.addEventListener("click", (e) => {
         e.preventDefault();
-        // Toca o vídeo com som quando clicado
-        nortemVideo.play();
-        // Scroll suave para a seção do vídeo
+        autoplayTriggered = true;
+        nortemVideo.muted = false;
+        nortemVideo.play().catch(() => {
+          nortemVideo.muted = true;
+          nortemVideo.play().catch(() => {});
+        });
         document.getElementById("video").scrollIntoView({ behavior: "smooth" });
       });
     });
