@@ -134,9 +134,8 @@
     const btnAgendar   = document.getElementById("btnAgendar");
     const unlockFill   = document.getElementById("unlockFill");
     const unlockPct    = document.getElementById("unlockPct");
-    const labelLocked  = btnAgendar ? btnAgendar.querySelector(".label-locked")   : null;
-    const iconLocked   = btnAgendar ? btnAgendar.querySelector(".icon-locked")    : null;
-    const labelUnlocked = btnAgendar ? btnAgendar.querySelector(".label-unlocked") : null;
+    const lockedContent   = btnAgendar ? btnAgendar.querySelector(".btn-locked-content")   : null;
+    const unlockedContent = btnAgendar ? btnAgendar.querySelector(".btn-unlocked-content") : null;
     const UNLOCK_AT    = 120; // segundos (2 min)
     let isUnlocked     = false;
 
@@ -158,9 +157,8 @@
           unlockPct.textContent  = "100%";
 
           // Troca conteúdo do botão
-          if (iconLocked)    iconLocked.hidden    = true;
-          if (labelLocked)   labelLocked.hidden   = true;
-          if (labelUnlocked) labelUnlocked.hidden = false;
+          if (lockedContent)   lockedContent.style.display   = "none";
+          if (unlockedContent) unlockedContent.style.display = "inline-flex";
 
           // Desbloqueia e anima
           btnAgendar.classList.remove("locked");
