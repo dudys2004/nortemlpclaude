@@ -458,13 +458,8 @@ p { margin: 0; color: var(--fg-soft); }
  * ========================================================= */
 .hero-figure {
   position: absolute;
-  /* Fórmula viewport-relativa: mantém a figura proporcionalmente posicionada
-     em qualquer resolução desktop. Equivale a ~11.1% do viewport a partir da direita.
-       2560px → right: -396px  (igual ao original right:-33% sobre container 1200px)
-       1920px → right: -147px  ✓ proporcional
-       1440px → right:  +39px  ✓ proporcional                                      */
-  top: 50%;
-  right: calc(600px - 38.91vw);
+  top: 120%;
+  right: -33%;
   bottom: auto;
   left: auto;
   z-index: 0;
@@ -473,12 +468,10 @@ p { margin: 0; color: var(--fg-soft); }
   align-items: center;
   justify-content: flex-end;
   width: auto;
-  transform: translateY(-50%);
+  transform: translateY(-42%);
 }
 .hero-figure img {
-  /* 160vh: sempre 160% da altura do viewport — escala proporcionalmente
-     em qualquer resolução sem depender do tamanho do container pai */
-  height: 160vh;
+  height: 160%;
   width: auto;
   max-width: none;
   object-fit: contain;
@@ -1141,22 +1134,27 @@ p { margin: 0; color: var(--fg-soft); }
 
 /* RESPONSIVE ---------------------------------------------- */
 
-/* ≥ 1200px: fórmula viewport-relativa cobre todas as resoluções desktop.
-   Não há mais breakpoint de 1920px — a fórmula calc() no base style
-   já se adapta proporcionalmente de 2560px até ~1200px. */
+/* Telas grandes (≤ 1920px) — ajuste da figura do hero */
+@media (max-width: 1920px) {
+  .hero-figure {
+    right: -18%;
+    transform: translateY(-44%);
+  }
+  .hero-figure img {
+    height: 145%;
+  }
+}
 
-/* Telas médias (≤ 1400px) — laptop/monitor comum
-   A fórmula começa a trazer a figura para dentro do container;
-   aqui fixamos width + right:0 para um resultado limpo. */
+/* Telas médias (≤ 1400px) — laptop/monitor comum */
 @media (max-width: 1400px) {
   .hero-figure {
     width: 42%;
     right: 0;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-42%);
   }
   .hero-figure img {
-    height: 100%;
+    height: auto;
     width: 100%;
     max-width: none;
   }
@@ -1168,11 +1166,11 @@ p { margin: 0; color: var(--fg-soft); }
     width: 38%;
     right: 0;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translateY(-42%);
     opacity: 0.65;
   }
   .hero-figure img {
-    height: 100%;
+    height: auto;
     width: 100%;
     max-width: none;
   }
