@@ -115,12 +115,18 @@
           nortemVideo.muted = true;
           nortemVideo.play().catch(() => {});
         });
-        // Desktop: rola direto ao vídeo (pula o cabeçalho da seção)
-        // Mobile: rola ao início da seção
-        const scrollTarget = window.innerWidth > 960
-          ? document.querySelector(".video-frame")
-          : document.getElementById("video");
-        scrollTarget.scrollIntoView({ behavior: "smooth" });
+        // Desktop: rola direto ao vídeo com offset (pula o cabeçalho da seção)
+        // Mobile: rola ao início da seção normalmente
+        if (window.innerWidth > 960) {
+          const SCROLL_OFFSET = 160; // px do topo do viewport — ajuste aqui se necessário
+          const frame = document.querySelector(".video-frame");
+          window.scrollTo({
+            top: frame.getBoundingClientRect().top + window.scrollY - SCROLL_OFFSET,
+            behavior: "smooth"
+          });
+        } else {
+          document.getElementById("video").scrollIntoView({ behavior: "smooth" });
+        }
       });
     });
 
