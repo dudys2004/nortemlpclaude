@@ -388,6 +388,7 @@ p { margin: 0; color: var(--fg-soft); }
   border-radius: 50%;
   filter: blur(100px);
   opacity: 0.35;
+  display: none;
 }
 .glow-1 {
   width: 500px; height: 500px;
