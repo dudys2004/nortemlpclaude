@@ -458,8 +458,8 @@ p { margin: 0; color: var(--fg-soft); }
  * ========================================================= */
 .hero-figure {
   position: absolute;
-  top: 120%;
-  right: -33%;
+  top: 50%;
+  right: -8%;
   bottom: auto;
   left: auto;
   z-index: 0;
@@ -468,10 +468,10 @@ p { margin: 0; color: var(--fg-soft); }
   align-items: center;
   justify-content: flex-end;
   width: auto;
-  transform: translateY(-42%);
+  transform: translateY(-50%);
 }
 .hero-figure img {
-  height: 160%;
+  height: 115%;
   width: auto;
   max-width: none;
   object-fit: contain;
