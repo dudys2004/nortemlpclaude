@@ -810,6 +810,11 @@ p { margin: 0; color: var(--fg-soft); }
   max-width: 980px;
   margin: 0 auto;
 }
+/* Quando há apenas um consultor, mantém o card centralizado e sem esticar */
+.consultants:has(.consultant-card:only-child) {
+  grid-template-columns: minmax(320px, 440px);
+  justify-content: center;
+}
 .consultant-card {
   background: var(--bg-card);
   border: 1px solid var(--line);
