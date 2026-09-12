@@ -455,7 +455,7 @@ p { margin: 0; color: var(--fg-soft); }
  * HERO FIGURE — Carlos como composição atmosférica
  * =========================================================
  * 🛠️  AJUSTES RÁPIDOS — altere os valores marcados com [AJUSTE]
- *     abaixo se quiser modificar a imagem do Carlos no hero.
+ *     abaixo se quiser modificar o vídeo do Carlos no hero.
  * ========================================================= */
 .hero-figure {
   position: absolute;
@@ -469,16 +469,28 @@ p { margin: 0; color: var(--fg-soft); }
   align-items: center;
   justify-content: flex-end;
   width: auto;
-  transform: translateY(-42%);
+  /* [AJUSTE] -70% (não -42%) porque a caixa ficou ~40% mais baixa
+     (aspect-ratio 4/3 em vez de 4/5) — precisa subir mais em % da
+     própria altura pra manter a cabeça na mesma posição de antes. */
+  transform: translateY(-70%);
 }
-.hero-figure img {
-  height: 160%;
-  width: auto;
-  max-width: none;
-  object-fit: contain;
-  object-position: center right;
-  mask-image: linear-gradient(180deg, #000 0%, #000 25%, rgba(0,0,0,0.5) 55%, transparent 72%);
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 25%, rgba(0,0,0,0.5) 55%, transparent 72%);
+/* O vídeo-fonte é 16:9 (1280x720) com o Carlos ocupando só a faixa
+   central da largura (medido pixel a pixel: 35-42% conforme o gesto,
+   sempre centralizado). aspect-ratio + object-fit:cover recorta essa
+   margem transparente das laterais sem cortar o Carlos em nenhum
+   frame do vídeo — mesma técnica usada no vídeo do hero do
+   Site-Criações. Não há corte vertical: a altura do vídeo já cobre
+   a caixa inteira, então esse aspect-ratio só controla quanto de
+   respiro sobra nas laterais dele. [AJUSTE] 4/3 mostra ~75% da
+   largura do frame (bem menos "zoom" que 4/5, que só mostrava 45%). */
+.hero-figure-canvas {
+  display: block;
+  width: 1225px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  object-position: center center;
+  opacity: 0;
+  transition: opacity 400ms ease-out;
 }
 /* Overlay sutil na lateral esquerda para garantir legibilidade do texto */
 .hero-figure::before {
@@ -1144,10 +1156,7 @@ p { margin: 0; color: var(--fg-soft); }
 @media (max-width: 1920px) {
   .hero-figure {
     right: -18%;
-    transform: translateY(-44%);
-  }
-  .hero-figure img {
-    height: 145%;
+    transform: translateY(-73%);
   }
 }
 
@@ -1157,12 +1166,11 @@ p { margin: 0; color: var(--fg-soft); }
     width: 42%;
     right: 0;
     top: 50%;
-    transform: translateY(-42%);
+    transform: translateY(-70%);
   }
-  .hero-figure img {
-    height: auto;
+  .hero-figure-canvas {
     width: 100%;
-    max-width: none;
+    height: auto;
   }
 }
 
@@ -1172,13 +1180,12 @@ p { margin: 0; color: var(--fg-soft); }
     width: 38%;
     right: 0;
     top: 50%;
-    transform: translateY(-42%);
+    transform: translateY(-70%);
     opacity: 0.65;
   }
-  .hero-figure img {
-    height: auto;
+  .hero-figure-canvas {
     width: 100%;
-    max-width: none;
+    height: auto;
   }
 
   .fit-grid { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -1200,8 +1207,9 @@ p { margin: 0; color: var(--fg-soft); }
     right: -5%;
     opacity: 0.55;
   }
-  .hero-figure img {
-    height: 100%;
+  .hero-figure-canvas {
+    width: 100%;
+    height: auto;
     opacity: 0.7;
   }
 
