@@ -1262,7 +1262,10 @@ p { margin: 0; color: var(--fg-soft); }
   }
 
   /* Hero ocupa tela cheia no mobile */
-  .hero { min-height: 100dvh; padding: calc(72px + 40px) 0 80px; }
+  /* [AJUSTE] só 8px de respiro abaixo do menu fixo (72px) — era 40px,
+     deixando um vão grande até a cabeça do Carlos e empurrando o botão
+     "Assista o vídeo" pra fora da tela inicial. */
+  .hero { min-height: 100dvh; padding: calc(72px + 8px) 0 80px; }
 
   /* Remove o brilho amarelo no mobile */
   .glow { display: none; }
