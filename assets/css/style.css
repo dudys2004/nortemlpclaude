@@ -20,6 +20,7 @@
   --accent: #8aafdd;       /* azul claro — cor da camisa do Carlos no vídeo */
   --accent-soft: #6491c9;
   --accent-glow: rgba(138, 175, 221, 0.25);
+  --accent-hover: #a8cdf2; /* azul mais claro, só pra diferenciar o hover do repouso */
 
   --serif: "Fraunces", "Times New Roman", serif;
   --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -130,7 +131,7 @@ p { margin: 0; color: var(--fg-soft); }
   box-shadow: 0 8px 30px -10px var(--accent-glow);
 }
 .btn-primary:hover {
-  background: #e7b65a;
+  background: var(--accent-hover);
   transform: translateY(-2px);
   box-shadow: 0 14px 40px -10px var(--accent-glow);
 }
@@ -285,7 +286,7 @@ p { margin: 0; color: var(--fg-soft); }
   animation: pulse-cta 2.4s ease-in-out infinite;
 }
 .nav-desktop .nav-cta:hover {
-  background: #e7b65a;
+  background: var(--accent-hover);
   color: #0a0a0a;
   animation-play-state: paused;
   transform: translateY(-1px);
@@ -1239,9 +1240,8 @@ p { margin: 0; color: var(--fg-soft); }
   .hero-figure {
     position: static;
     display: block;
-    width: 55%;
-    max-width: 220px;
-    margin: 0 auto 28px;
+    width: 100%;
+    margin: 0 0 24px;
     opacity: 1;
     right: auto;
     top: auto;
