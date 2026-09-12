@@ -17,9 +17,9 @@
   --line: rgba(255, 255, 255, 0.08);
   --line-strong: rgba(255, 255, 255, 0.18);
 
-  --accent: #d4a24c;       /* âmbar/dourado */
-  --accent-soft: #b88a39;
-  --accent-glow: rgba(212, 162, 76, 0.25);
+  --accent: #8aafdd;       /* azul claro — cor da camisa do Carlos no vídeo */
+  --accent-soft: #6491c9;
+  --accent-glow: rgba(138, 175, 221, 0.25);
 
   --serif: "Fraunces", "Times New Roman", serif;
   --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -87,7 +87,7 @@ p { margin: 0; color: var(--fg-soft); }
   padding: 0.35em 0.9em;
   border: 1px solid var(--accent);
   border-radius: 999px;
-  background: rgba(212, 162, 76, 0.06);
+  background: rgba(138, 175, 221, 0.06);
 }
 .eyebrow--with-logo {
   display: inline-flex;
@@ -303,14 +303,14 @@ p { margin: 0; color: var(--fg-soft); }
 @keyframes pulse-cta {
   0%, 100% {
     box-shadow:
-      0 0 0 0 rgba(212, 162, 76, 0.55),
-      0 8px 24px -8px rgba(212, 162, 76, 0.35);
+      0 0 0 0 rgba(138, 175, 221, 0.55),
+      0 8px 24px -8px rgba(138, 175, 221, 0.35);
     transform: scale(1);
   }
   50% {
     box-shadow:
-      0 0 0 14px rgba(212, 162, 76, 0),
-      0 8px 28px -7px rgba(212, 162, 76, 0.5);
+      0 0 0 14px rgba(138, 175, 221, 0),
+      0 8px 28px -7px rgba(138, 175, 221, 0.5);
     transform: scale(1.02);
   }
 }
@@ -566,7 +566,7 @@ p { margin: 0; color: var(--fg-soft); }
 }
 .metric-card--alt {
   background: linear-gradient(135deg, #1a1408 0%, var(--bg-card) 100%);
-  border-color: rgba(212, 162, 76, 0.25);
+  border-color: rgba(138, 175, 221, 0.25);
 }
 .metric-label {
   font-size: 0.82rem;
@@ -631,7 +631,7 @@ p { margin: 0; color: var(--fg-soft); }
 .section--dark { background: var(--bg-soft); }
 .section--cta {
   background:
-    radial-gradient(ellipse at top, rgba(212, 162, 76, 0.08), transparent 60%),
+    radial-gradient(ellipse at top, rgba(138, 175, 221, 0.08), transparent 60%),
     var(--bg);
 }
 
@@ -668,7 +668,7 @@ p { margin: 0; color: var(--fg-soft); }
   inset: 0;
   border-radius: var(--r-md);
   padding: 1px;
-  background: linear-gradient(135deg, transparent 60%, rgba(212, 162, 76, 0.3));
+  background: linear-gradient(135deg, transparent 60%, rgba(138, 175, 221, 0.3));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
@@ -713,8 +713,8 @@ p { margin: 0; color: var(--fg-soft); }
   width: 48px;
   height: 48px;
   border-radius: 12px;
-  background: rgba(212, 162, 76, 0.1);
-  border: 1px solid rgba(212, 162, 76, 0.25);
+  background: rgba(138, 175, 221, 0.1);
+  border: 1px solid rgba(138, 175, 221, 0.25);
   color: var(--accent);
   display: grid;
   place-items: center;
@@ -792,9 +792,9 @@ p { margin: 0; color: var(--fg-soft); }
   width: 22px; height: 22px;
   flex: 0 0 22px;
   border-radius: 50%;
-  background: rgba(212, 162, 76, 0.15);
+  background: rgba(138, 175, 221, 0.15);
   border: 1px solid var(--accent);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d4a24c' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238aafdd' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
   background-size: 14px;
   background-position: center;
   background-repeat: no-repeat;
@@ -843,7 +843,7 @@ p { margin: 0; color: var(--fg-soft); }
   overflow: hidden;
   aspect-ratio: 4 / 5;
   background:
-    radial-gradient(ellipse at 50% 100%, rgba(212, 162, 76, 0.08), transparent 60%),
+    radial-gradient(ellipse at 50% 100%, rgba(138, 175, 221, 0.08), transparent 60%),
     linear-gradient(180deg, #1c1c1c 0%, #0e0e0e 100%);
   display: flex;
   align-items: flex-end;
@@ -922,7 +922,7 @@ p { margin: 0; color: var(--fg-soft); }
   transform: rotate(-45deg) translate(1px, -2px);
 }
 .form-note {
-  background: rgba(212, 162, 76, 0.07);
+  background: rgba(138, 175, 221, 0.07);
   border-left: 3px solid var(--accent);
   padding: 1rem 1.2rem;
   border-radius: 0 var(--r-sm) var(--r-sm) 0;
@@ -980,7 +980,7 @@ p { margin: 0; color: var(--fg-soft); }
   outline: none;
   border-color: var(--accent);
   background: var(--bg);
-  box-shadow: 0 0 0 3px rgba(212, 162, 76, 0.12);
+  box-shadow: 0 0 0 3px rgba(138, 175, 221, 0.12);
 }
 .form-row select {
   appearance: none;
@@ -1036,8 +1036,8 @@ p { margin: 0; color: var(--fg-soft); }
 }
 .form-msg--success strong { color: #c0f0cf; }
 .form-msg--warning {
-  background: rgba(212, 162, 76, 0.1);
-  border: 1px solid rgba(212, 162, 76, 0.4);
+  background: rgba(138, 175, 221, 0.1);
+  border: 1px solid rgba(138, 175, 221, 0.4);
   color: var(--fg-soft);
 }
 .form-msg--warning strong { color: var(--accent); }
@@ -1229,11 +1229,35 @@ p { margin: 0; color: var(--fg-soft); }
   .footer-bottom .container { flex-direction: column; align-items: flex-start; }
   .hero-cta .btn { width: 100%; justify-content: center; }
 
-  /* Em mobile, esconde a figura (não cabe sem cobrir o texto) */
-  .hero-figure { display: none; }
+  /* Em mobile, a figura sai do posicionamento absoluto (que sobrepunha o
+     texto) e vira um bloco normal, exibido ANTES do conteúdo — column-reverse
+     inverte a ordem visual dos dois filhos sem mudar o HTML. */
+  .hero-inner {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .hero-figure {
+    position: static;
+    display: block;
+    width: 55%;
+    max-width: 220px;
+    margin: 0 auto 28px;
+    opacity: 1;
+    right: auto;
+    top: auto;
+    transform: none;
+  }
+  .hero-figure::before,
+  .hero-figure::after {
+    display: none;
+  }
+  .hero-figure-canvas {
+    width: 100%;
+    height: auto;
+  }
 
   /* Hero ocupa tela cheia no mobile */
-  .hero { min-height: 100dvh; padding: calc(72px + 80px) 0 80px; }
+  .hero { min-height: 100dvh; padding: calc(72px + 40px) 0 80px; }
 
   /* Remove o brilho amarelo no mobile */
   .glow { display: none; }
