@@ -1240,8 +1240,10 @@ p { margin: 0; color: var(--fg-soft); }
   .hero-figure {
     position: static;
     display: block;
-    width: 100%;
-    margin: 0 0 24px;
+    /* [AJUSTE] largura total da TELA (não só da coluna) — estoura o
+       padding lateral do container com margem negativa. */
+    width: auto;
+    margin: 0 calc(-1 * var(--pad)) 20px;
     opacity: 1;
     right: auto;
     top: auto;
@@ -1254,6 +1256,9 @@ p { margin: 0; color: var(--fg-soft); }
   .hero-figure-canvas {
     width: 100%;
     height: auto;
+    /* [AJUSTE] 4/5 (em vez do 4/3 do desktop) deixa o Carlos preencher
+       bem mais a caixa — testado pra não cortá-lo em nenhum frame. */
+    aspect-ratio: 4 / 5;
   }
 
   /* Hero ocupa tela cheia no mobile */
