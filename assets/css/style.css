@@ -408,6 +408,13 @@ p { margin: 0; color: var(--fg-soft); }
   position: relative;
   z-index: 1;
   display: block;
+  /* [AJUSTE] Faz o .hero-inner ocupar a altura cheia do .hero (que tem
+     min-height:100vh) em vez de encolher pro tamanho do texto. Sem
+     isso, o .hero-figure (que é filho dele) não tem uma altura de
+     referência confiável pra se ancorar embaixo — fica "flutuando"
+     no meio da seção. Resetado pra `auto` abaixo de 1101px, onde a
+     figura volta a usar o posicionamento antigo (top/translateY). */
+  align-self: stretch;
 }
 .hero-content {
   position: relative;
@@ -460,20 +467,43 @@ p { margin: 0; color: var(--fg-soft); }
  * ========================================================= */
 .hero-figure {
   position: absolute;
-  top: 120%;
-  right: -33%;
-  bottom: auto;
+  top: auto;
+  /* [AJUSTE] `right` em `%` é relativo ao `.container` (max-width
+     travado em 1200px) — como o container para de crescer bem antes
+     do viewport, um `-18%` fixo empurra a caixa pra fora da TELA em
+     qualquer largura abaixo de ~1630px (ficava invisível no preview
+     porque o fundo é escuro e o `overflow:hidden` do .hero corta sem
+     deixar rastro visual — só apareceu ao medir em pixel). `calc()`
+     com `vw` resolve como comprimento absoluto (não é %), então
+     funciona mesmo aninhado no container, mas escala com a largura
+     REAL da tela — mesma ideia usada no hero do Site-Criações (a
+     figura referencia o viewport, não o container centralizado). O
+     coeficiente (600px = metade do container de 1200px; 42.5vw) foi
+     calibrado pra bater com o valor antigo (-18% de 1200px) exatamente
+     em 1920px de tela — mesma margem de sempre ali, e sem vazar pela
+     borda em telas mais estreitas. Vale pra qualquer largura ≥1101px,
+     inclusive ultrawide/4K — não precisa mais de faixa separada. */
+  right: calc(600px - 42.5vw);
+  /* [AJUSTE] Igual à técnica do Site-Criações: a caixa é dimensionada
+     por ALTURA DA VIEWPORT (vh) + aspect-ratio, não por uma largura
+     fixa em px. Uma largura fixa (era 1225px) dá uma altura fixa
+     também — em qualquer janela mais baixa que o normal (não
+     maximizada, notebook com tela curta) a caixa simplesmente não
+     cabe e corta a cabeça do Carlos, porque o tamanho dela nunca
+     olhava pra altura real da tela. `height:85vh` garante que ela
+     sempre cabe, proporcional à altura de QUALQUER janela. `bottom`
+     (em vez de `top`) ancora pela base — precisa do .hero-inner com
+     `align-self:stretch` (acima) pra ter uma borda inferior confiável
+     pra grudar. */
+  bottom: -108px;
   left: auto;
   z-index: 0;
   pointer-events: none;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: flex-end;
   width: auto;
-  /* [AJUSTE] -70% (não -42%) porque a caixa ficou ~40% mais baixa
-     (aspect-ratio 4/3 em vez de 4/5) — precisa subir mais em % da
-     própria altura pra manter a cabeça na mesma posição de antes. */
-  transform: translateY(-70%);
+  height: auto;
 }
 /* O vídeo-fonte é 16:9 (1280x720) com o Carlos ocupando só a faixa
    central da largura (medido pixel a pixel: 35-42% conforme o gesto,
@@ -486,7 +516,19 @@ p { margin: 0; color: var(--fg-soft); }
    largura do frame (bem menos "zoom" que 4/5, que só mostrava 45%). */
 .hero-figure-canvas {
   display: block;
-  width: 1225px;
+  width: auto;
+  height: 85vh;
+  max-height: 950px;
+  /* [AJUSTE] Teto de largura proporcional à tela: sem isso, a altura
+     por vh sozinha dá uma largura CONSTANTE (não depende da largura
+     da janela, só da altura) — em telas estreitas (~1101-1400px) essa
+     largura fixa não cabe ao lado da coluna de texto sem sobrepor.
+     `max-width` + `aspect-ratio` juntos fazem o canvas encolher
+     proporcionalmente (largura E altura) quando bate no teto, em vez
+     de espremer. Calibrado pra não cortar em 1920px (onde o valor já
+     validado, ~1225px, fica abaixo do teto) e ficar bem menor em
+     1101px (~400px, sem sobrepor o texto). */
+  max-width: clamp(380px, calc(115vw - 866px), 1300px);
   aspect-ratio: 4 / 3;
   object-fit: cover;
   object-position: center center;
@@ -1153,40 +1195,47 @@ p { margin: 0; color: var(--fg-soft); }
 
 /* RESPONSIVE ---------------------------------------------- */
 
-/* Telas grandes (≤ 1920px) — ajuste da figura do hero */
-@media (max-width: 1920px) {
-  .hero-figure {
-    right: -18%;
-    transform: translateY(-73%);
-  }
-}
+/* A faixa ultra-larga (>1920px) usa a MESMA fórmula base de `right`
+   (calc(600px - 42.5vw), definida lá em cima) — não precisa de uma
+   faixa dedicada, já que `calc()` com `vw` escala sozinho com a tela
+   real em qualquer largura, de 1101px a 4K/ultrawide. O tamanho
+   (height:85vh) também já escala sozinho com monitores mais altos.
 
-/* Telas médias (≤ 1400px) — laptop/monitor comum */
-@media (max-width: 1400px) {
-  .hero-figure {
-    width: 42%;
-    right: 0;
-    top: 50%;
-    transform: translateY(-70%);
-  }
-  .hero-figure-canvas {
-    width: 100%;
-    height: auto;
-  }
-}
+   Faixa 1101–1400px removida de propósito: usava uma fórmula de
+   tamanho/posição bem menor (width:42% do container) do que a faixa
+   de cima — o Carlos aparecia bem menor em notebooks comuns
+   (1366×768, 1280×800 etc.) do que em monitores maiores. Sem essa
+   faixa, 1101px pra cima inteiro usa a MESMA fórmula — testado sem
+   sobreposição com o texto e sem vazar pela borda direita, por
+   medição de pixel (não só visual), até 1101px. */
 
-/* Telas intermediárias (≤ 1100px) — laptop pequeno */
+/* Telas intermediárias (≤ 1100px) — laptop pequeno.
+   [AJUSTE] Testei igualar essa faixa à faixa grande, mas abaixo de
+   ~1100px o texto (que quebra em 2 linhas mais cedo, coluna mais
+   estreita) passa a colidir visualmente com o corpo do Carlos —
+   testado em 961px e 1020px, sobreposição real. Mantido width:38% +
+   opacity:0.65 (original) só nessa faixa estreita — junto com
+   height:auto/bottom:auto, que desligam o dimensionamento por vh da
+   faixa grande e devolvem o comportamento antigo (caixa do tamanho
+   do canvas, ancorada por top/translateY). */
 @media (max-width: 1100px) {
+  .hero-inner {
+    align-self: auto;
+  }
   .hero-figure {
     width: 38%;
     right: 0;
     top: 50%;
+    bottom: auto;
+    height: auto;
     transform: translateY(-70%);
     opacity: 0.65;
   }
   .hero-figure-canvas {
     width: 100%;
     height: auto;
+    max-height: none;
+    max-width: none;
   }
 
   .fit-grid { grid-template-columns: 1fr; gap: 2.5rem; }
@@ -1256,6 +1305,8 @@ p { margin: 0; color: var(--fg-soft); }
   .hero-figure-canvas {
     width: 100%;
     height: auto;
+    max-height: none;
+    max-width: none;
     /* [AJUSTE] 4/5 (em vez do 4/3 do desktop) deixa o Carlos preencher
        bem mais a caixa — testado pra não cortá-lo em nenhum frame. */
     aspect-ratio: 4 / 5;
