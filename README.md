@@ -37,6 +37,8 @@ nortem-lp/
 
 ## 📊 Configurar o formulário com Google Sheets (passo a passo)
 
+> ⚠️ **OBSOLETO desde 29/09/2026.** O formulário não fala mais com Apps Script: envia para a rota pública do CRM (`/api/public/lead` do Site-Nortem). Ver [INTEGRACAO_CRM.md](INTEGRACAO_CRM.md). **Nunca** colocar token ou URL `/exec` no `script.js` — ele é público. Os passos abaixo ficam só como histórico.
+
 Os leads serão enviados direto para uma planilha do Google Sheets sua, usando o **Google Apps Script** como ponte. É gratuito, ilimitado, e os dados ficam totalmente sob seu controle.
 
 ### Passo 1 — Criar a planilha

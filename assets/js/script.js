@@ -7,11 +7,10 @@
   "use strict";
 
   /* ---------- CONFIG -------------------------------------- */
-  // URL do Google Apps Script — CRM Base (Site-Nortem)
-  // Este endpoint integra os leads da LP diretamente com o CRM
-  const CRM_ENDPOINT = "https://script.google.com/macros/s/AKfycbxVf5C3kGlxk7F2dsX6Cwm3xGn93TS86AJmB0iRq85FT7sqIio2ZnEKOSNW2w8gOYPx/exec";
-  const CRM_TOKEN = "danilocesarsouzaregispires03021989";
-  const CRM_CLIENTE_ID = "Dudys";
+  // Entrada pública de leads do CRM (Site-Nortem → Supabase).
+  // NUNCA colocar token/senha aqui: este arquivo é público. A rota só aceita
+  // criar lead e o servidor impõe tenant, unidade, status e fase.
+  const LEAD_ENDPOINT = "https://dash.nortemconsultoria.com.br/api/public/lead";
 
   // Número do WhatsApp para o botão flutuante e links (formato internacional, sem '+').
   const WHATSAPP_NUMBER = "5587996050090";
@@ -256,7 +255,7 @@
     submitBtn.innerHTML = "Enviando...";
 
     try {
-      const isConfigured = CRM_ENDPOINT && !CRM_ENDPOINT.startsWith("SEU_DEPLOY_ID");
+      const isConfigured = Boolean(LEAD_ENDPOINT);
 
       if (isConfigured) {
         // Mapear campos do formulário da LP para os campos do CRM Base
@@ -267,10 +266,6 @@
           empresa: formData.empresa || "",
           segmento: formData.segmento || "",
           faturamento: formData.faturamento || "",
-          dataLead: new Date().toISOString().split('T')[0],
-          origem: "Tráfego Pago LP",
-          status: "Novo",
-          fase: "Novo Lead",
           observacoes: `Cargo: ${formData.cargo || '-'}\n` +
                       `Tempo na empresa: ${formData.tempo_empresa || '-'}\n` +
                       `Desafio principal: ${formData.desafio || '-'}\n\n` +
@@ -280,22 +275,21 @@
         console.log("[Nortem] Enviando lead para CRM...");
         console.log("[Nortem] Payload:", leadPayload);
 
-        const response = await fetch(CRM_ENDPOINT, {
+        const response = await fetch(LEAD_ENDPOINT, {
           method: "POST",
+          // text/plain evita o preflight CORS; o servidor lê como JSON
           headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({
-            action: "createLead",
-            clienteId: CRM_CLIENTE_ID,
-            token: CRM_TOKEN,
-            payload: leadPayload
-          }),
-          redirect: "follow"
+            fonte: "lp-nortem",
+            website: formData.website || "", // honeypot anti-robô
+            ...leadPayload
+          })
         });
 
         console.log("[Nortem] Status da resposta:", response.status);
 
         const responseText = await response.text();
-        console.log("[Nortem] Resposta do Apps Script:", responseText);
+        console.log("[Nortem] Resposta do CRM:", responseText);
 
         if (!response.ok) {
           throw new Error("HTTP " + response.status + ": " + responseText);
@@ -311,7 +305,7 @@
         }
 
         if (result.error) {
-          console.error("[Nortem] Erro retornado pelo Apps Script:", result.error);
+          console.error("[Nortem] Erro retornado pelo CRM:", result.error);
           throw new Error(result.error);
         }
 
@@ -319,7 +313,7 @@
       } else {
         // Modo demo: sem endpoint configurado
         console.warn(
-          "[Nortem] CRM_ENDPOINT não configurado. Edite assets/js/script.js."
+          "[Nortem] LEAD_ENDPOINT não configurado. Edite assets/js/script.js."
         );
         await new Promise((r) => setTimeout(r, 600));
       }
